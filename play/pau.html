@@ -1,0 +1,76 @@
+<div class="qrcode"></div>
+<header>
+  
+
+<script src="https://cpwebassets.codepen.io/assets/editor/global/codemirror-12bc3c1693e16b4384f504cf792b859212ab55b3aff5117ab4be4638dec74fb6.js"></script>
+
+  <div class="home">
+    <a href="https://naver.github.io/egjs-view360/panoviewer.html">
+      <img class="egjs_logo" src="https://naver.github.io/egjs-view360/examples/panoviewer/etc/../../../common/img/type_black.svg">
+      PanoViewer
+    </a>
+  </div>
+  <h1>Pau Test</h1>
+</header>
+<h2>Play m3u8 HLS 360 video with PanoViewer, with <a href="https://github.com/video-dev/hls.js/" target="_blank">hls.js</a></h2>
+<div class="infos">
+  <p class="info">
+    <span class="head">projection</span>: <a href="https://naver.github.io/egjs-view360/release/latest/doc/eg.view360.PanoViewer.PROJECTION_TYPE.html" target="_blank"><span class="value">STEREOSCOPIC_EQUI</span></a>
+  </p>
+  <p class="info">
+    <span class="head">video</span>: <a href="https://naver.github.io/egjs-view360/examples/img/m3u8/equi.m3u8" target="_blank"><span class="value">Visions - Burano in VR by Maja Wrońska (https://vimeo.com/244870931)</span></a>
+  </p>
+</div>
+<div class="viewer">
+  <video id="video" playsinline="playsinline" controls="" loop="" preload="auto" crossorigin="anonymous" src="./myplayer.js"> </video>
+  <div class="container"></div>
+  <div class="play-container">
+    <button class="play"></button>
+  </div>
+</div>
+<div class="source">
+  <pre>var videoUrl = "https://raw.githubusercontent.com/corbella83/Video360/main/thundra/thundra360.m3u8";
+var PanoViewer = eg.view360.PanoViewer;
+var panoviewer = document.querySelector(".viewer");
+var container = document.querySelector(".viewer .container");
+var video = document.getElementById("video");
+var btn = document.getElementById("play");
+
+if (Hls.isSupported()) {
+var hls = new Hls();
+hls.loadSource(videoUrl);
+hls.attachMedia(video);
+} else if (video.canPlayType("application/vnd.apple.mpegurl")) {
+video.src = videoUrl;
+}
+
+video.addEventListener("play", () => {
+var PanoViewer = eg.view360.PanoViewer;
+var container = document.querySelector(".container");
+var viewer = new PanoViewer(container, {
+  video: video,
+  projectionType: "equirectangular"
+});
+
+window.addEventListener("resize", function () {
+  panoViewer.updateViewportDimensions();
+});
+
+document.querySelector(".play-container").style.display = "none";
+
+window.addEventListener("resize", function (e) {
+  viewer.updateViewportDimensions();
+});
+
+PanoControls.init(panoviewer, viewer);
+PanoControls.showLoading();
+});
+
+document.querySelector(".play-container .play").addEventListener("click", function () {
+video.play();
+});
+  </pre>
+</div>
+
+
+

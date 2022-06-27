@@ -18,8 +18,8 @@ video.addEventListener("play", () => {
   var container = document.querySelector(".container");
   var viewer = new PanoViewer(container, {
     video: video,
-    projectionType: "equirectangular"
-  });
+    projectionType: "equirectangular" });
+
 
   window.addEventListener("resize", function () {
     panoViewer.updateViewportDimensions();
